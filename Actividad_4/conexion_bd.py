@@ -1,5 +1,5 @@
 from tkinter import messagebox;
-import sqlite3;
+import pyodbc;
 import bcrypt;
 
 
@@ -8,9 +8,9 @@ class ConexionBD():
 
     def conexionbd(self):
         try:
-            conexion = sqlite3.connect("C:/laragon/www/POOS181/Actividad_4/BDActividad4.db")
+            conexion = pyodbc.connect('DRIVER={SQL SERVER};SERVER=ELIAS;DATABASE=Actividad4POO;UID=DBA;PWD=1234')
             return conexion
-        except sqlite3.OperationalError:
+        except pyodbc.Error as error:
             messagebox.showwarning("Error", "Error al abrir la base de datos")
 
     def AltaBebidas(self, nombre, clasificacion, marca, precio):
@@ -20,11 +20,11 @@ class ConexionBD():
             conx.close()
         else:   
             cursor = conx.cursor()
+            sqlInsert = "INSERT INTO Bebidas (nombre, clasificacion, marca, precio) VALUES (?,?,?,?)"
             datos = (nombre, clasificacion, marca, precio)
-            sqlInsert = '''INSERT INTO Bebidas (Nombre, Clasificacion, Marca, Precio) VALUES ('{}','{}','{}','{}')'''.format(nombre, clasificacion, marca, precio)
             cursor.execute(sqlInsert, datos)
-            conx.commit()
-            conx.close()
+            cursor.commit()
+            cursor.close()
             messagebox.showinfo("Alta", "Se ha dado de alta la bebida")
 
     def BajaBebidas(self, id):
@@ -34,7 +34,7 @@ class ConexionBD():
             conx.close()
         else:
             cursor = conx.cursor()
-            sqlDelete = 'DELETE FROM Bebidas WHERE ID = '+id+''
+            sqlDelete = 'DELETE FROM Bebidas WHERE id_bebida = '+id+''
             cursor.execute(sqlDelete, (id,))
             conx.commit()
             conx.close()
@@ -57,7 +57,7 @@ class ConexionBD():
         else:
             cursor = conx.cursor()
             datos = (id, nombre, clasificacion, marca, precio)
-            sqlUpdate = 'update Bebidas set (nombre, clasificacion, marca, precio) = (?,?,?,?) where id = '+id+''
+            sqlUpdate = 'update Bebidas set (nombre, clasificacion, marca, precio) = (?,?,?,?) where id_bebida = '+id+''
             cursor.execute(sqlUpdate, datos)
             conx.commit()
             conx.close()

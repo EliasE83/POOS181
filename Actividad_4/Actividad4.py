@@ -19,17 +19,18 @@ def baja():
     messagebox.showinfo("Baja", "Se ha dado de baja la bebida")
 
 def consultar():
+    tabla.clipboard_clear()
     datos = instancia.ConsultarBebidas()
     for row in datos:
         tabla.insert('', 'end', text=row[0], values=(row[1], row[2], row[3], row[4]))
 
 def actualizar():
     instancia.ActualizarBebidas(varID.get(), varNombre.get(), varClasificacion.get(), varMarca.get(), varPrecio.get())
-    varID.set('')
-    varNombre.set('')
-    varClasificacion.set('')
-    varMarca.set('')
-    varPrecio.set('')
+    varID.set(varID)
+    varNombre.set(varNombre)
+    varClasificacion.set(varClasificacion)
+    varMarca.set(varMarca)
+    varPrecio.set(varPrecio)
     messagebox.showinfo("Actualización", "Se ha actualizado la bebida")
 
 ventana = Tk()
