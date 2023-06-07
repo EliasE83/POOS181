@@ -6,12 +6,7 @@ import tkinter as tk;
 instancia = ConexionBD()
 
 def alta():
-    instancia.AltaBebidas(varNombre.get(), varClasificacion.get(), varMarca.get(), varPrecio.get())
-    varNombre.set('')
-    varClasificacion.set('')
-    varMarca.set('')
-    varPrecio.set('')
-    messagebox.showinfo("Alta", "Se ha dado de alta la bebida")
+    instancia.AltaBebidas(varNomb.get(), varClasifica.get(), varMarc.get(), varPreci.get())
 
 def baja():
     instancia.BajaBebidas(varID.get())
@@ -19,19 +14,35 @@ def baja():
     messagebox.showinfo("Baja", "Se ha dado de baja la bebida")
 
 def consultar():
-    tabla.clipboard_clear()
+
+    tabla.delete(*tabla.get_children())
     datos = instancia.ConsultarBebidas()
     for row in datos:
         tabla.insert('', 'end', text=row[0], values=(row[1], row[2], row[3], row[4]))
 
 def actualizar():
-    instancia.ActualizarBebidas(varID.get(), varNombre.get(), varClasificacion.get(), varMarca.get(), varPrecio.get())
-    varID.set(varID)
-    varNombre.set(varNombre)
-    varClasificacion.set(varClasificacion)
-    varMarca.set(varMarca)
-    varPrecio.set(varPrecio)
+    instancia.ActualizarBebidas(varId.get(), varNombre.get(), varClasificacion.get(), varMarca.get(), varPrecio.get())
     messagebox.showinfo("Actualización", "Se ha actualizado la bebida")
+
+def promedio():
+    tabla.delete(*tabla.get_children())
+    datos = instancia.PrecioPromedio()
+    for row in datos:
+        messagebox.showinfo("Precio promedio", "El precio promedio de las bebidas es: "+str(row[0]))
+
+def cantidadPorMarca():
+    tabla.delete(*tabla.get_children())
+    datos = instancia.CantBebidasMarca()
+    for row in datos:
+        tabla.insert('', 'end', text=row[0], values=(row[1]))
+        messagebox.showinfo("Cantidad por marca", "Marca: "+str(row[0]) + " Cantidad: "+str(row[1]))
+
+def cantidadPorClas():
+    tabla.delete(*tabla.get_children())
+    datos = instancia.CantBebidasClas()
+    for row in datos:
+        tabla.insert('', 'end', text=row[0], values=(row[1]))
+        messagebox.showinfo("Cantidad por Clasificacion", "Clasificacion: "+str(row[0]) + " Cantidad: "+str(row[1]))        
 
 ventana = Tk()
 
@@ -51,25 +62,22 @@ pestana4= ttk.Frame(panel)
 #Pestaña 1 Alta Bebidas
 
 titulo = Label(pestana1, text="Alta Bebidas", font=("Arial Bold", 20)).pack()
-varID= StringVar()
-lblID = Label(pestana1, text="ID: ").pack()
-txtID = Entry(pestana1, textvariable=varID).pack()
 
-varNombre= StringVar()
-lblNombre = Label(pestana1, text="Nombre: ").pack()
-txtNombre = Entry(pestana1, textvariable=varNombre).pack()
+varNomb= StringVar()
+lblNomb = Label(pestana1, text="Nombre: ").pack()
+txtNomb = Entry(pestana1, textvariable=varNomb).pack()
 
-varClasificacion= StringVar()
-lblClasificacion = Label(pestana1, text="Clasificación: ").pack()
-txtClasificacion = Entry(pestana1, textvariable=varClasificacion).pack()
+varClasifica= StringVar()
+lblClasifica = Label(pestana1, text="Clasificación: ").pack()
+txtClasifica = Entry(pestana1, textvariable=varClasifica).pack()
 
-varMarca= StringVar()
-lblMarca = Label(pestana1, text="Marca: ").pack()
-txtMarca = Entry(pestana1, textvariable=varMarca).pack()
+varMarc= StringVar()
+lblMarc = Label(pestana1, text="Marca: ").pack()
+txtMarc = Entry(pestana1, textvariable=varMarc).pack()
 
-varPrecio= StringVar()
-lblPrecio = Label(pestana1, text="Precio: ").pack()
-txtPrecio = Entry(pestana1, textvariable=varPrecio).pack()
+varPreci= StringVar()
+lblPreci = Label(pestana1, text="Precio: ").pack()
+txtPreci = Entry(pestana1, textvariable=varPreci).pack()
 
 #Pestaña 2 Baja Bebidas
 
@@ -97,9 +105,9 @@ tabla.pack()
 #Pestaña 4 Actualizar Bebidas
 
 titulo = Label(pestana4, text="Actualizar Bebidas", font=("Arial Bold", 20)).pack()
-varID= StringVar()
+varId= StringVar()
 lblID = Label(pestana4, text="ID: ").pack()
-txtID = Entry(pestana4, textvariable=varID).pack()
+txtID = Entry(pestana4, textvariable=varId).pack()
 
 varNombre= StringVar()
 lblNombre = Label(pestana4, text="Nombre: ").pack()
@@ -123,6 +131,9 @@ btnAlta = Button(pestana1, text="Alta", command=alta).pack()
 btnBaja = Button(pestana2, text="Baja", command=baja).pack()
 btnConsultar = Button(pestana3, text="Consultar", command=consultar).pack()
 btnActualizar = Button(pestana4, text="Actualizar", command=actualizar).pack()
+btnPromedio = Button(pestana3, text="Precio promedio de bebidas", command=promedio).pack()
+btnCantidadPorMarca = Button(pestana3, text="Cantidad de bebidas por marca", command=cantidadPorMarca).pack()
+btnCantidadPorClas = Button(pestana3, text="Cantidad de bebidas por clasificación", command=cantidadPorClas).pack()
 
 panel.add(pestana1, text="Alta Bebidas")
 panel.add(pestana2, text="Baja Bebidas")
