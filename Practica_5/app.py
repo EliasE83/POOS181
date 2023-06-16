@@ -1,5 +1,5 @@
 #Importar el framework
-from flask import Flask
+from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
 
 #Inicializacion del APP
@@ -15,12 +15,22 @@ mysql = MySQL(app)
 #Declaracion de rutas http://localhost:5000/
 @app.route("/")
 def index():
-    return "Hola mundo FLASK!"
+    return render_template('index.html')
 
-#Declaracion de rutas http://localhost:5000/
-@app.route("/guardar")
+#Declaracion de rutas http://localhost:5000/guardar tipo post
+@app.route("/guardar", methods=['POST'])
 def guardar():
-    return "Se guardó en la BD"
+    if request.method == 'POST':
+        titulo=request.form['txtTitulo']
+        artista=request.form['txtArtista']
+        anio=request.form['txtAnio']
+        print(titulo,artista,anio)
+        
+    return "Los datos llegaron por POST"
+
+
+
+
 
 #Declaracion de rutas http://localhost:5000/
 @app.route("/eliminar")
