@@ -1,5 +1,5 @@
 #Importar el framework
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
 #Inicializacion del APP
@@ -10,6 +10,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] ='dbflask'
+app.secret_key = 'mysecretkey'
 mysql = MySQL(app)
 
 #Declaracion de rutas http://localhost:5000/
@@ -21,12 +22,19 @@ def index():
 @app.route("/guardar", methods=['POST'])
 def guardar():
     if request.method == 'POST':
-        titulo=request.form['txtTitulo']
-        artista=request.form['txtArtista']
-        anio=request.form['txtAnio']
-        print(titulo,artista,anio)
+        #Pasamos a las variables el contenido de los inputs
+        Vtitulo=request.form['txtTitulo']
+        Vartista=request.form['txtArtista']
+        Vanio=request.form['txtAnio']
         
-    return "Los datos llegaron por POST"
+        #Conectar nuestra BD y ejecutar el insert
+
+        cs = mysql.connection.cursor()
+        cs.execute('insert into tb_albums (titulo, artista, anio) values (%s, %s, %s)', (Vtitulo, Vartista, Vanio))
+        mysql.connection.commit()
+
+    flash('Los datos se guardaron correctamente')
+    return redirect(url_for('index'))
 
 
 
