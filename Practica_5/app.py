@@ -49,6 +49,18 @@ def guardar():
 def eliminar():
     return "Se eliminó en la BD"
 
+#Ruta con parametros
+@app.route("/actualizar/<id>")
+def actualizar(id):
+    cs = mysql.connection.cursor()
+    cs.execute('select * from tb_albums where id_album = %s', (id,))
+    consultaAlbumID = cs.fetchone()
+    return render_template('editarAlbum.html', album=consultaAlbumID)
+
+@app.route("/actualizarBD/<id>", methods=['POST'])
+def actualizarBD(id):
+    return ""
+
 #Ejecucion del Servidor en el puerto 5000
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
