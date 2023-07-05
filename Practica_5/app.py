@@ -65,9 +65,18 @@ def actualizarBD(id):
 @app.route("/eliminar/<id>")
 def eliminar(id):
     cs = mysql.connection.cursor()
-    cs.execute('select titulo from tb_albums where id_album = %s', (id,))
+    cs.execute('select * from tb_albums where id_album = %s', (id,))
     consultaAlbum = cs.fetchone()
     return render_template('borrarRegistro.html', album=consultaAlbum)
+
+@app.route("/eliminarBD/<id>", methods=['POST'])
+def eliminarBD(id):
+    cs = mysql.connection.cursor()
+    cs.execute('delete from tb_albums where id_album = %s', (id,))
+    mysql.connection.commit()
+
+    flash('Se elimino el album ' + id)
+    return redirect(url_for('index'))
 
 #Ejecucion del Servidor en el puerto 5000
 if __name__ == '__main__':
