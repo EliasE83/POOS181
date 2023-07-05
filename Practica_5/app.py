@@ -40,15 +40,6 @@ def guardar():
     flash('Los datos se guardaron correctamente')
     return redirect(url_for('index'))
 
-
-
-
-
-#Declaracion de rutas http://localhost:5000/
-@app.route("/eliminar")
-def eliminar():
-    return "Se eliminó en la BD"
-
 #Ruta con parametros
 @app.route("/actualizar/<id>")
 def actualizar(id):
@@ -59,7 +50,24 @@ def actualizar(id):
 
 @app.route("/actualizarBD/<id>", methods=['POST'])
 def actualizarBD(id):
-    return ""
+    if request.method == 'POST':
+        VtituloUp=request.form['txtTituloUp']
+        VArtistaUp=request.form['txtArtistaUp']
+        VAnioUp=request.form['txtAnioUp']
+
+        cs = mysql.connection.cursor()
+        cs.execute('update tb_albums set titulo = %s, artista = %s, anio = %s where id_album = %s', (VtituloUp, VArtistaUp, VAnioUp, id))
+        mysql.connection.commit()
+
+    flash('Se actualizo el album ' + VtituloUp)
+    return redirect(url_for('index'))
+
+@app.route("/eliminar/<id>")
+def eliminar(id):
+    cs = mysql.connection.cursor()
+    cs.execute('select titulo from tb_albums where id_album = %s', (id,))
+    consultaAlbum = cs.fetchone()
+    return render_template('borrarRegistro.html', album=consultaAlbum)
 
 #Ejecucion del Servidor en el puerto 5000
 if __name__ == '__main__':

@@ -21,7 +21,7 @@
 
 
     <br>
-    <form action="#" method="POST">
+    <form action="/guardar" method="POST">
         <input type="text" name="txtTitulo" placeholder="Ingrese el titulo">
         <input type="text" name="txtArtista" placeholder="Ingrese el artista">
         <input type="number" name="txtAnio" placeholder="Ingrese el año">
@@ -52,7 +52,7 @@
                     <td> {{alb.3}} </td>
                     <td>
                         <a href="/actualizar/{{alb.0}}">Editar</a>
-                        <a href="#">Borrar</a>
+                        <a href="/eliminar/{{alb.0}}">Borrar</a>
                     </td>
                 </tr>
             {% endfor %}
