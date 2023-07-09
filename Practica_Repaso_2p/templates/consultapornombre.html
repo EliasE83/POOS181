@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frutas</title>
+</head>
+<body>
+    <h1>Consulta de Frutas por nombre</h1>
+    <br> 
+    <form action="/consultanombre">
+        <input type="text" placeholder="Ingrese la fruta" name="frutas" required>    
+        <button type="submit">Consultar</button>
+    </form>
+
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <td>Id: </td>
+                <td>Fruta: </td>
+                <td>Temporada: </td>
+                <td>Precio: </td>
+                <td>Stock: </td>
+            </tr>
+        </thead>
+        <tbody>
+            {% if fruta %}
+                <tr>
+                    <td> {{fruta.0}} </td>
+                    <td> {{fruta.1}} </td>
+                    <td> {{fruta.2}} </td>
+                    <td> {{fruta.3}} </td>
+                    <td> {{fruta.4}} </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</body>
+</html>

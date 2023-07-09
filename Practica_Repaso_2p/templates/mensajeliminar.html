@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Eliminar</title>
+</head>
+<body>
+    <form action="/eliminarRegistro/{{frutas.0}}" method="POST">
+    <h1>¿Está seguro que desea eliminar el registro {{frutas.1}} de temporada {{frutas.2}} y de stock {{frutas.4}}? </h1>
+    <button>Sí</button>
+    </form>
+    <a href="/"><button>No</button></a>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar registro</title>
+</head>
+<body>
+    <h1>Fruta a Editar</h1>
+    <br><br>
+
+    <form action="/actualizarRegistro/{{frutas.0}}" method="POST">
+        <br><br>
+        <label for="fruta">Fruta: </label>
+        <input type="text" name="fruta" id="fruta" value="{{frutas.1}}"><br>
+        <br><br>
+        <label for="temporada">Temporada: </label>
+        <input type="text" name="temporada" id="temporada" value="{{frutas.2}}"><br>
+        <br><br>
+        <label for="precio">Precio: </label>
+        <input type="text" name="precio" id="precio" value="{{frutas.3}}"><br>
+        <br><br>
+        <label for="stock">Stock: </label>
+        <input type="text" name="stock" id="stock" value="{{frutas.4}}"><br>
+        <br><br>
+        <button type="submit">Editar</button>
+
+    </form>
+</body>
+</html>
