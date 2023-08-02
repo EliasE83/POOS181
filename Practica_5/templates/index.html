@@ -10,18 +10,23 @@
     <h1 class="display-1 text-center">Gestión de Albums</h1>
 </div>
  
-    
+
+<!-- Inicio container text-center -->
+<div class="container text-center">
     {% with mensajes= get_flashed_messages() %}
         {% if mensajes %}
             {% for msj in mensajes%}
-                <h3>{{msj}}</h3>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{msj}}</strong> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <script> Swal.fire('Datos Guardados', 'Los datos se guardaron con éxito!', 'success')</script>
+
             {%endfor%}
         {% endif %}
     {% endwith %}
 
-
-<!-- Inicio container text-center -->
-<div class="container text-center">
     <div class="row">
         <div class="col-md-6"> <!-- Inicio col-md-5 -->
             <div class="card card-body mb-5"> 
